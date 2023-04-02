@@ -1,6 +1,8 @@
 const form = document.getElementById('formulario');
-const mostrarEnPantalla = document.getElementById('mostrarEnPantalla');
 form.addEventListener('submit', crearPersona);
+let persona;
+const mostrarEnPantalla = document.getElementById('mostrarEnPantalla');
+let bandera = false;
 class Persona {
     #nombre;
     #añoNacimiento;
@@ -35,15 +37,15 @@ class Persona {
     set altura(newAltura) { this.#altura = newAltura; }
 
     mostrarDatos() {
-        mostrarEnPantalla.innerHTML = (`<ul>
-        <li>Nombre: ${this.nombre}</li>
-        <li>Año de nacimiento: ${this.#añoNacimiento}</li>
-        <li>Edad: ${this.edad}</li>
-        <li>DNI: ${this.DNI}</li>
-        <li>Sexo: ${this.sexo}</li>
-        <li>Peso: ${this.peso}</li>
-        <li>Altura: ${this.altura}</li>
-        </ul>`);
+            mostrarEnPantalla.innerHTML += (`<ul>
+            <li>Nombre: ${this.nombre}</li>
+            <li>Año de nacimiento: ${this.#añoNacimiento}</li>
+            <li>Edad: ${this.edad}</li>
+            <li>DNI: ${this.DNI}</li>
+            <li>Sexo: ${this.sexo}</li>
+            <li>Peso: ${this.peso}</li>
+            <li>Altura: ${this.altura}</li>
+             </ul>`);
     }
     mostrarGeneracion() {
         let añoNac = this.añoNacimiento;
@@ -73,30 +75,30 @@ class Persona {
 
         switch (generacion) {
             case 'Z':
-                document.write(`${this.nombre} pertenece a la generación:<span> ${generacion}</span> y su rasgo principal es la: <span>${rasgo}</span>`);
+                alert(`${this.nombre} pertenece a la generación: ${generacion} y su rasgo principal es la: ${rasgo}`);  
                 break;
             case 'Y':
-                document.write(`${this.nombre} pertenece a la generación:<span> ${generacion}</span> y su rasgo principal es la: <span>${rasgo}</span>`);
+                alert(`${this.nombre} pertenece a la generación: ${generacion} y su rasgo principal es la: ${rasgo}`);
                 break;
             case 'X':
-                document.write(`${this.nombre} pertenece a la generación:<span> ${generacion}</span> y su rasgo principal es la: <span>${rasgo}</span>`);
+                alert(`${this.nombre} pertenece a la generación: ${generacion} y su rasgo principal es la: ${rasgo}`);
                 break;
             case 'Baby Boom':
-                document.write(`${this.nombre} pertenece a la generación:<span> ${generacion}</span> y su rasgo principal es la: <span>${rasgo}</span>`);
+                alert(`${this.nombre} pertenece a la generación: ${generacion} y su rasgo principal es la: ${rasgo}`);
                 break;
             case 'Silent Generation':
-                document.write(`${this.nombre} pertenece a la generación:<span> ${generacion}</span> y su rasgo principal es la: <span>${rasgo}</span>`);
+                alert(`${this.nombre} pertenece a la generación: ${generacion} y su rasgo principal es la: ${rasgo}`);
                 break;
             default:
-                document.write(`${this.nombre} no pertenece a ninguna generación`);
+                alert(`${this.nombre} no pertenece a ninguna generación`);
                 break;
         }
     }
     mayorDeEdad() {
         if (this.edad >= 18) {
-            document.write(`<p>${this.nombre} de ${this.edad} años, es mayo de edad.</p>`);
+            alert(`${this.nombre} de ${this.edad} años, es mayo de edad.`);
         } else {
-            document.write(`<p>${this.nombre} de ${this.edad} años, es menor de edad.</p>`);
+            alert(`${this.nombre} de ${this.edad} años, es menor de edad.`);
         }
     }
 }
@@ -111,9 +113,20 @@ function crearPersona(e) {
     const peso = document.getElementById('peso');
     const altura = document.getElementById('altura');
 
-    const persona = new Persona(nombre.value, añoNacimiento.value, edad.value, dni.value, sexo.value, peso.value, altura.value);
-    persona.mostrarDatos();
-    console.log(persona);
+    persona = new Persona(nombre.value, añoNacimiento.value, edad.value, dni.value, sexo.value, peso.value, altura.value);
+    const botonCrear = document.querySelector('button');
+    botonCrear.className = 'btn btn-dark w-100 disabled';
+    mostrarEnPantalla.innerHTML = `<section class="row pb-5">
+    <div class="col-md-4 px-0 py-1">           
+        <button type="button" class="btn btn-dark w-100" id="verDatos" onclick="persona.mostrarDatos()">Ver datos</button>
+    </div>
+    <div class="col-md-4 px-0 py-1 px-md-1">           
+        <button type="button" class="btn btn-dark w-100" id="verGeneracion" onclick="persona.mostrarGeneracion()">Ver generación</button>
+    </div>
+    <div class="col-md-4 px-0 py-1">                
+        <button type="button" class="btn btn-dark w-100" id="esMayor" onclick="persona.mayorDeEdad()">¿Es mayor de edad?</button>
+    </div>
+  </section>`
 }
 
 // let federico = new Persona('Federico',2000,22,43204867,'H','70Kg',1.75);
