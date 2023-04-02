@@ -1,3 +1,8 @@
+const form = document.getElementById('formulario');
+form.addEventListener('submit', crearPersona);
+let persona;
+const mostrarEnPantalla = document.getElementById('mostrarEnPantalla');
+let bandera = false;
 class Persona {
     #nombre;
     #añoNacimiento;
@@ -6,13 +11,13 @@ class Persona {
     #sexo;
     #peso;
     #altura;
-    constructor( nombre,añoNacimiento,edad, DNI,sexo,peso,altura) {
+    constructor(nombre, añoNacimiento, edad, DNI, sexo, peso, altura) {
         this.#nombre = nombre;
         this.#añoNacimiento = añoNacimiento;
         this.#edad = edad;
         this.#DNI = DNI;
         this.#sexo = sexo;
-        this.#peso =peso;
+        this.#peso = peso;
         this.#altura = altura;
     }
     get nombre() { return this.#nombre; }
@@ -31,71 +36,97 @@ class Persona {
     set peso(newPeso) { this.#peso = newPeso; }
     set altura(newAltura) { this.#altura = newAltura; }
 
-    mostrarDatos(){
-        document.write(`<ul>
-        <li>Nombre: ${this.nombre}</li>
-        <li>Año de nacimiento: ${this.#añoNacimiento}</li>
-        <li>Edad: ${this.edad}</li>
-        <li>DNI: ${this.DNI}</li>
-        <li>Sexo: ${this.sexo}</li>
-        <li>Peso: ${this.peso}</li>
-        <li>Altura: ${this.altura}</li>
-        </ul>`);
+    mostrarDatos() {
+            mostrarEnPantalla.innerHTML += (`<ul>
+            <li>Nombre: ${this.nombre}</li>
+            <li>Año de nacimiento: ${this.#añoNacimiento}</li>
+            <li>Edad: ${this.edad}</li>
+            <li>DNI: ${this.DNI}</li>
+            <li>Sexo: ${this.sexo}</li>
+            <li>Peso: ${this.peso}</li>
+            <li>Altura: ${this.altura}</li>
+             </ul>`);
     }
-    mostrarGeneracion(){
+    mostrarGeneracion() {
         let añoNac = this.añoNacimiento;
         let generacion = '';
         let rasgo = '';
 
-        if(añoNac>=1994 && añoNac<=2010){
+        if (añoNac >= 1994 && añoNac <= 2010) {
             generacion = 'Z';
             rasgo = 'Irreverencia';
         }
-        else if(añoNac>=1981 && añoNac<=1993){
+        else if (añoNac >= 1981 && añoNac <= 1993) {
             generacion = 'Y';
             rasgo = 'Frustración';
         }
-        else if(añoNac>=1969 && añoNac<=1980){
+        else if (añoNac >= 1969 && añoNac <= 1980) {
             generacion = 'X';
             rasgo = 'Obsesión por el éxito';
-        
-        }else if(añoNac>=1949 && añoNac<=1968){
+
+        } else if (añoNac >= 1949 && añoNac <= 1968) {
             generacion = 'Baby Boom';
             rasgo = 'Ambición';
-        
-        }else if(añoNac>=1930 && añoNac<=1948){
+
+        } else if (añoNac >= 1930 && añoNac <= 1948) {
             generacion = 'Silent Generation';
             rasgo = 'Austeridad';
         }
 
-        switch(generacion){
+        switch (generacion) {
             case 'Z':
-                document.write(`${this.nombre} pertenece a la generación:<span> ${generacion}</span> y su rasgo principal es la: <span>${rasgo}</span>`);
+                alert(`${this.nombre} pertenece a la generación: ${generacion} y su rasgo principal es la: ${rasgo}`);  
                 break;
             case 'Y':
-                document.write(`${this.nombre} pertenece a la generación:<span> ${generacion}</span> y su rasgo principal es la: <span>${rasgo}</span>`);
+                alert(`${this.nombre} pertenece a la generación: ${generacion} y su rasgo principal es la: ${rasgo}`);
                 break;
             case 'X':
-                document.write(`${this.nombre} pertenece a la generación:<span> ${generacion}</span> y su rasgo principal es la: <span>${rasgo}</span>`);
+                alert(`${this.nombre} pertenece a la generación: ${generacion} y su rasgo principal es la: ${rasgo}`);
                 break;
             case 'Baby Boom':
-                document.write(`${this.nombre} pertenece a la generación:<span> ${generacion}</span> y su rasgo principal es la: <span>${rasgo}</span>`);
+                alert(`${this.nombre} pertenece a la generación: ${generacion} y su rasgo principal es la: ${rasgo}`);
                 break;
             case 'Silent Generation':
-                document.write(`${this.nombre} pertenece a la generación:<span> ${generacion}</span> y su rasgo principal es la: <span>${rasgo}</span>`);
+                alert(`${this.nombre} pertenece a la generación: ${generacion} y su rasgo principal es la: ${rasgo}`);
                 break;
             default:
-            document.write(`${this.nombre} no pertenece a ninguna generación`);
-            break;
+                alert(`${this.nombre} no pertenece a ninguna generación`);
+                break;
         }
     }
-    mayorDeEdad(){
-        if(this.edad >= 18){
-            document.write(`<p>${this.nombre} de ${this.edad} años, es mayo de edad.</p>`);
-        }else{
-            document.write(`<p>${this.nombre} de ${this.edad} años, es menor de edad.</p>`);
+    mayorDeEdad() {
+        if (this.edad >= 18) {
+            alert(`${this.nombre} de ${this.edad} años, es mayo de edad.`);
+        } else {
+            alert(`${this.nombre} de ${this.edad} años, es menor de edad.`);
         }
     }
+}
+
+function crearPersona(e) {
+    e.preventDefault();
+    const nombre = document.getElementById('nombre');
+    const añoNacimiento = document.getElementById('añoNacimiento');
+    const edad = document.getElementById('edad');
+    const dni = document.getElementById('dni');
+    const sexo = document.getElementById('sexo');
+    const peso = document.getElementById('peso');
+    const altura = document.getElementById('altura');
+
+    persona = new Persona(nombre.value, añoNacimiento.value, edad.value, dni.value, sexo.value, peso.value, altura.value);
+    const botonCrear = document.querySelector('button');
+    botonCrear.className = 'btn btn-dark w-100 disabled';
+    mostrarEnPantalla.innerHTML = `<section class="row pb-5">
+    <div class="col-md-4 px-0 py-1">           
+        <button type="button" class="btn btn-dark w-100" id="verDatos" onclick="persona.mostrarDatos()">Ver datos</button>
+    </div>
+    <div class="col-md-4 px-0 py-1 px-md-1">           
+        <button type="button" class="btn btn-dark w-100" id="verGeneracion" onclick="persona.mostrarGeneracion()">Ver generación</button>
+    </div>
+    <div class="col-md-4 px-0 py-1">                
+        <button type="button" class="btn btn-dark w-100" id="esMayor" onclick="persona.mayorDeEdad()">¿Es mayor de edad?</button>
+    </div>
+  </section>`
 }
 
 // let federico = new Persona('Federico',2000,22,43204867,'H','70Kg',1.75);
