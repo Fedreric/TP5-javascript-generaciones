@@ -2,7 +2,7 @@ const form = document.getElementById('formulario');
 form.addEventListener('submit', crearPersona);
 let persona;
 const mostrarEnPantalla = document.getElementById('mostrarEnPantalla');
-let bandera = false;
+let bandera = 0;
 class Persona {
     #nombre;
     #añoNacimiento;
@@ -37,6 +37,7 @@ class Persona {
     set altura(newAltura) { this.#altura = newAltura; }
 
     mostrarDatos() {
+        if (bandera === 0) {
             mostrarEnPantalla.innerHTML += (`<ul>
             <li>Nombre: ${this.nombre}</li>
             <li>Año de nacimiento: ${this.#añoNacimiento}</li>
@@ -46,6 +47,8 @@ class Persona {
             <li>Peso: ${this.peso}</li>
             <li>Altura: ${this.altura}</li>
              </ul>`);
+            bandera++;
+        }
     }
     mostrarGeneracion() {
         let añoNac = this.añoNacimiento;
@@ -75,7 +78,7 @@ class Persona {
 
         switch (generacion) {
             case 'Z':
-                alert(`${this.nombre} pertenece a la generación: ${generacion} y su rasgo principal es la: ${rasgo}`);  
+                alert(`${this.nombre} pertenece a la generación: ${generacion} y su rasgo principal es la: ${rasgo}`);
                 break;
             case 'Y':
                 alert(`${this.nombre} pertenece a la generación: ${generacion} y su rasgo principal es la: ${rasgo}`);
@@ -128,8 +131,3 @@ function crearPersona(e) {
     </div>
   </section>`
 }
-
-// let federico = new Persona('Federico',2000,22,43204867,'H','70Kg',1.75);
-// federico.mostrarDatos();
-// federico.mostrarGeneracion();
-// federico.mayorDeEdad();
